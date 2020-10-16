@@ -33,10 +33,26 @@ namespace Nebula.CI.Services.Plugin
                 }
                 var uid = item["metadata"]["uid"].ToString();
                 var annoName = item["metadata"]["annotations"]["name"].ToString();
+                var configurl = item["metadata"]["annotations"]["configurl"]?.ToString();
+                var resulturl = item["metadata"]["annotations"]["resulturl"]?.ToString();
                 
                 SetProperty(plugin, "Uid", uid);
                 SetProperty(plugin, "Name", name);
                 SetProperty(plugin, "AnnoName", annoName);
+                if(configurl == null)
+                {
+                    SetProperty(plugin, "ConfigUrl", "/api/ci/plugins/common/config");
+                }
+                else
+                {
+                    SetProperty(plugin, "ConfigUrl", configurl);
+                }
+
+                if(resulturl != null)
+                {
+                    SetProperty(plugin, "ResultUrl", resulturl);
+                }
+
                 var taskParams = GetField<List<PluginParam>>(plugin, "_params");
                 var inputResources = GetField<List<PluginResource>>(plugin, "_inputResources");
                 var outputResources = GetField<List<PluginResource>>(plugin, "_outputResources");
@@ -112,10 +128,27 @@ namespace Nebula.CI.Services.Plugin
                 var name = item["metadata"]["name"].ToString();
                 var uid = item["metadata"]["uid"].ToString();
                 var annoName = item["metadata"]["annotations"]["name"].ToString();
+                var configurl = item["metadata"]["annotations"]["configurl"]?.ToString();
+                var resulturl = item["metadata"]["annotations"]["resulturl"]?.ToString();
+                           
                 var plugin = CreateEntity<Plugin>();
                 SetProperty(plugin, "Uid", uid);
                 SetProperty(plugin, "Name", name);
                 SetProperty(plugin, "AnnoName", annoName);
+                if(configurl == null)
+                {
+                    SetProperty(plugin, "ConfigUrl", "/api/ci/plugins/common/config");
+                }
+                else
+                {
+                    SetProperty(plugin, "ConfigUrl", configurl);
+                }
+
+                if(resulturl != null)
+                {
+                    SetProperty(plugin, "ResultUrl", resulturl);
+                }
+
                 var taskParams = GetField<List<PluginParam>>(plugin, "_params");
                 var inputResources = GetField<List<PluginResource>>(plugin, "_inputResources");
                 var outputResources = GetField<List<PluginResource>>(plugin, "_outputResources");

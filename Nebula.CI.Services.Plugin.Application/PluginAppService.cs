@@ -15,6 +15,9 @@ namespace Nebula.CI.Services.Plugin
             _pluginRepository = pluginRepository;
         }
 
+        /// <summary>
+        /// 根据id获取插件详细信息
+        /// </summary>
         public async Task<PluginDto> GetAsync(string id)
         {
             var plugin = await _pluginRepository.GetAsync(id);
@@ -24,6 +27,9 @@ namespace Nebula.CI.Services.Plugin
             return pluginDto;
         }
 
+        /// <summary>
+        /// 获取插件列表
+        /// </summary>
         public async Task<List<PluginBaseDto>> GetListAsync()
         {
             var plugins = await _pluginRepository.GetListAsync();

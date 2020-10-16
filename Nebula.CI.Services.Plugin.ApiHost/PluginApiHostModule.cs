@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
@@ -65,6 +66,13 @@ namespace Nebula.CI.Services.Plugin
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Nebula CI Plugin Service API", Version = "v1" });
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
+
+                var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+                var commentsFileName = "../../../../Nebula.CI.Services.Plugin.Application/bin/Nebula.CI.Services.Plugin.Application.xml";
+                var commentsFile = Path.Combine(baseDirectory, commentsFileName);
+
+                options.IncludeXmlComments(commentsFile);
             });
         }
     }

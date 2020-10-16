@@ -16,6 +16,9 @@ namespace Nebula.CI.Services.Plugin
             _resourceRepository = resourceRepository;
         }
 
+        /// <summary>
+        /// 获取资源列表
+        /// </summary>
         public async Task<List<ResourceTypeDto>> GetListAsync()
         {
             var resources = await _resourceRepository.GetListAsync();
