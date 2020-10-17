@@ -41,7 +41,7 @@ namespace Nebula.CI.Services.Plugin
                 SetProperty(plugin, "AnnoName", annoName);
                 if(configurl == null)
                 {
-                    SetProperty(plugin, "ConfigUrl", "/api/ci/plugins/common/config");
+                    SetProperty(plugin, "ConfigUrl", "/api/ci/plugins/common/config/");
                 }
                 else
                 {
