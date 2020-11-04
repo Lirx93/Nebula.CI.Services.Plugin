@@ -59,7 +59,7 @@ namespace Nebula.CI.Services.Plugin
 
                 foreach (var param in item["spec"]["params"])
                 {
-                    var taskParam = CreateEntity<PluginParam>();
+                    var taskParam = CreateEntity<PluginParam>(); 
                     SetProperty(taskParam, "Name", param["name"].ToString());
                     SetProperty(taskParam, "Type", param["type"]?.ToString());
                     SetProperty(taskParam, "Default", param["default"]?.ToString()??"");
