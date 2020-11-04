@@ -62,10 +62,28 @@ namespace Nebula.CI.Services.Plugin
                     var taskParam = CreateEntity<PluginParam>();
                     SetProperty(taskParam, "Name", param["name"].ToString());
                     SetProperty(taskParam, "Type", param["type"]?.ToString());
-                    //SetProperty(taskParam, "Description", param["description"]?.ToString());
-                    //SetProperty(taskParam, "Default", param["default"]?.ToString());
-                    SetProperty(taskParam, "Description", param["name"]?.ToString());
-                    SetProperty(taskParam, "Default", "");
+                    SetProperty(taskParam, "Default", param["default"]?.ToString()??"");
+                    string descstr = param["description"]?.ToString();
+                    if(descstr != null)
+                    {
+                        var descstrlist = descstr.Split("#");
+                        SetProperty(taskParam, "AnnoName", descstrlist[0]);
+                        if(descstrlist.Length == 2)
+                        {
+                            SetProperty(taskParam, "Description", descstrlist[1]);
+                        }
+                        else
+                        {
+                            SetProperty(taskParam, "Description", "");
+                        }
+                    }
+                    var optional = new List<string>();
+                    var optionalstr = item["metadata"]["annotations"][param["name"].ToString()]?.ToString();
+                    if(optionalstr != null)
+                    {
+                        optional = new List<string>(optionalstr.Split("#"));
+                    }
+                    SetProperty(taskParam, "Optional", optional);
                     taskParams.Add(taskParam);
                 }
 

@@ -10,5 +10,7 @@ namespace Nebula.CI.Services.Plugin
         public string Type { get; set; }
         public string Description { get; set; }
         public string Default { get; set; }
+        public string AnnoName { get; set; }
+        public List<string> Optional { get; set; }
     }
 }
