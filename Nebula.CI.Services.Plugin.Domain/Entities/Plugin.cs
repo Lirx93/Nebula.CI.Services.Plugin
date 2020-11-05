@@ -12,6 +12,7 @@ namespace Nebula.CI.Services.Plugin
         public string AnnoName { get; protected set; }
         public string ConfigUrl { get; protected set; }
         public string ResultUrl { get; protected set; }
+        public string Description { get; protected set; }
 
         protected List<PluginParam> _params = new List<PluginParam>();
         public IReadOnlyCollection<PluginParam> Params => _params.AsReadOnly();

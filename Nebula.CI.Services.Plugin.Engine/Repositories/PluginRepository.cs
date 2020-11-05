@@ -35,10 +35,12 @@ namespace Nebula.CI.Services.Plugin
                 var annoName = item["metadata"]["annotations"]["name"].ToString();
                 var configurl = item["metadata"]["annotations"]["configurl"]?.ToString();
                 var resulturl = item["metadata"]["annotations"]["resulturl"]?.ToString();
+                var desc = item["metadata"]["annotations"]["description"]?.ToString()??"";
                 
                 SetProperty(plugin, "Uid", uid);
                 SetProperty(plugin, "Name", name);
                 SetProperty(plugin, "AnnoName", annoName);
+                SetProperty(plugin, "Description", desc);
                 if(configurl == null)
                 {
                     SetProperty(plugin, "ConfigUrl", "/api/ci/plugins/common/config/");
@@ -148,11 +150,13 @@ namespace Nebula.CI.Services.Plugin
                 var annoName = item["metadata"]["annotations"]["name"].ToString();
                 var configurl = item["metadata"]["annotations"]["configurl"]?.ToString();
                 var resulturl = item["metadata"]["annotations"]["resulturl"]?.ToString();
+                var desc = item["metadata"]["annotations"]["description"]?.ToString()??"";
                            
                 var plugin = CreateEntity<Plugin>();
                 SetProperty(plugin, "Uid", uid);
                 SetProperty(plugin, "Name", name);
                 SetProperty(plugin, "AnnoName", annoName);
+                SetProperty(plugin, "Description", desc);
                 if(configurl == null)
                 {
                     SetProperty(plugin, "ConfigUrl", "/api/ci/plugins/common/config/");
@@ -173,11 +177,31 @@ namespace Nebula.CI.Services.Plugin
 
                 foreach (var param in item["spec"]["params"])
                 {
-                    var taskParam = CreateEntity<PluginParam>();
+                    var taskParam = CreateEntity<PluginParam>(); 
                     SetProperty(taskParam, "Name", param["name"].ToString());
                     SetProperty(taskParam, "Type", param["type"]?.ToString());
-                    SetProperty(taskParam, "Description", param["description"]?.ToString());
-                    SetProperty(taskParam, "Default", param["default"]?.ToString());
+                    SetProperty(taskParam, "Default", param["default"]?.ToString()??"");
+                    string descstr = param["description"]?.ToString();
+                    if(descstr != null)
+                    {
+                        var descstrlist = descstr.Split("#");
+                        SetProperty(taskParam, "AnnoName", descstrlist[0]);
+                        if(descstrlist.Length == 2)
+                        {
+                            SetProperty(taskParam, "Description", descstrlist[1]);
+                        }
+                        else
+                        {
+                            SetProperty(taskParam, "Description", "");
+                        }
+                    }
+                    var optional = new List<string>();
+                    var optionalstr = item["metadata"]["annotations"][param["name"].ToString()]?.ToString();
+                    if(optionalstr != null)
+                    {
+                        optional = new List<string>(optionalstr.Split("#"));
+                    }
+                    SetProperty(taskParam, "Optional", optional);
                     taskParams.Add(taskParam);
                 }
 
