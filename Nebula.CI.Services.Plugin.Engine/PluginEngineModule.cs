@@ -24,7 +24,7 @@ namespace Nebula.CI.Services.Plugin
 
             context.Services.AddTransient(typeof(Kubernetes), provider => {
                 //var config = new KubernetesClientConfiguration { Host = "http://172.18.67.105:8001/" };
-                KubernetesClientConfiguration config = KubernetesClientConfiguration.BuildDefaultConfig();
+                //KubernetesClientConfiguration config = KubernetesClientConfiguration.BuildDefaultConfig();
                 return new Kubernetes(config);
             });
         }
